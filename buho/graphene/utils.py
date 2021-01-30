@@ -1,23 +1,21 @@
 from graphene_django.types import DjangoObjectType
 from graphql_geojson import GeoJSONType
 
-class SoftDeleteDjangoObjectType:
+class SoftDeleteDjangoObjectType(DjangoObjectType):
+    class Meta:
+        abstract = True
 
     @classmethod
-    def get_node(cls, info, id):
-        queryset = cls.get_queryset(cls._meta.model.objects, info)
-        try:
-            return queryset.get(pk=id, trashed=False)
-        except cls._meta.model.DoesNotExist:
-            return None
+    def get_queryset(cls, queryset, info):
+        queryset = queryset.filter(trashed=False)
+        return queryset
 
-class SoftDeleteGeoJSONType:
+
+class SoftDeleteGeoJSONType(GeoJSONType):
+    class Meta:
+        abstract = True
     
     @classmethod
-    def get_node(cls, info, id):
-        queryset = cls.get_queryset(cls._meta.model.objects, info)
-        try:
-            return queryset.get(pk=id, trashed=False)
-        except cls._meta.model.DoesNotExist:
-            return None
-
+    def get_queryset(cls, queryset, info):
+        queryset = queryset.filter(trashed=False)
+        return queryset

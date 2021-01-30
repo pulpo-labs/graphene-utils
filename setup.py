@@ -10,7 +10,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='graphene-utils',
-    version='0.2.1',
+    version='0.2.2',
     packages=find_namespace_packages(include=['buho.*']),
     include_package_data=True,
     description='This project contains a set of utilities to use with Graphene.',
